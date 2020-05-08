@@ -10,7 +10,7 @@ setup(
     long_description="efficient concurrent test for you http interface",
     license="Apache Licence",
 
-    url="https://github.com/wusri66666/InitReadme.git",
+    url="https://github.com/caofanCPU/D8gerConcurrent.git",
     author="D8ger",
     author_email="xyb5to0ZCY@Gmail.com",
 
