@@ -85,7 +85,3 @@ def main():
     nums = list(range(0, execute_num))
     for result in executor.map(execute_http, nums):
         print(result)
-
-
-if __name__ == '__main__':
-    main()

@@ -1,0 +1,38 @@
+
+== HTTP接口并发测试工具
+. easy-http
+. httpie
+. http和json测试自定义接口
+
+=== easy-http
+
+.下载安装
+[source, bash]
+----
+pip3 install D8gerConcurrent
+----
+
+.使用示例
+[source, bash]
+----
+# 获取帮助信息
+easy-http [-h|--help]
+
+# 使用默认参数: 1个线程, 连续请求1次
+easy-http http://www.debuggerpowerzcy.top/
+
+# 使用64个线程连续请求20,000次
+easy-http http://www.debuggerpowerzcy.top/ -w 64 -l 20000
+----
+
+.构建过程
+[source, bash]
+----
+# 本地安装测试
+python3 setup.py install
+# 打包
+python3 setup.py sdist
+# 上传发布
+# pip3 install twine
+twine upload dist/*
+----
