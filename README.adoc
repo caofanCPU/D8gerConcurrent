@@ -35,4 +35,7 @@ python3 setup.py sdist
 # 上传发布
 # pip3 install twine
 twine upload dist/*
+
+# pip3更新安装
+pip3 install --upgrade D8gerConcurrent
 ----

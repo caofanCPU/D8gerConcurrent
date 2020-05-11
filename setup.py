@@ -4,7 +4,7 @@ install_requires = ['requests', 'numpy', 'argparse']
 
 setup(
     name="D8gerConcurrent",
-    version="1.0.1",
+    version="1.0.4",
     keywords=("pip", "concurrent", "d8ger", "test"),
     description="concurrent d8ger test",
     long_description="efficient concurrent test for you d8ger interface",
@@ -20,6 +20,9 @@ setup(
     install_requires=install_requires,
     scripts=[],
     entry_points={
-        'console_scripts': ['easy-http=d8ger.easy_test:main']
+        'console_scripts': [
+            'easy-http=d8ger.easy_test:main',
+            'login-cookie=d8ger.login_cookie:main'
+        ]
     },
 )
