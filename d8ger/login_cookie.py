@@ -1,17 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
 import json
 import ssl
-# import os
 
 import requests
-import argparse
 
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
-
-# user_home = os.path.expanduser('~')
 
 
 def init_login_file_name() -> str:

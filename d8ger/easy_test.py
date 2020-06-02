@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
 import datetime
 import ssl
 from concurrent.futures.thread import ThreadPoolExecutor
 
-import requests
-
 import numpy as np
-import argparse
+import requests
 
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
@@ -50,15 +49,15 @@ def execute_http(i):
     request_headers = {}
     request_body = {}
     response_text = "无响应文本"
-    executeStartTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+    execute_start_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
     try:
         response = requests.request("POST", url, headers=request_headers, json=request_body, timeout=3, verify=False)
         # JSON标准格式
         response_text = response.text
     except Exception as e:
         print(e)
-    executeEndTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-    return "executeStartTime=[{}], executeEndTime=[{}]\n响应结果:\n{}".format(executeStartTime, executeEndTime, response_text)
+    execute_end_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+    return "execute_start_time=[{}], execute_end_time=[{}]\n响应结果:\n{}".format(execute_start_time, execute_end_time, response_text)
 
 
 def handle_json_str_value(json):
