@@ -2,15 +2,32 @@
 # -*- coding: utf-8 -*-
 import json
 import ssl
-import os
+# import os
 
 import requests
+import argparse
 
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
 
-user_home = os.path.expanduser('~')
+# user_home = os.path.expanduser('~')
+
+
+def init_login_file_name() -> str:
+    """
+    初始化参数, 读取shell命令参数, 自动登录
+    依次返回httpie_view方式, 线程池, 登录cookie
+    :rtype: str
+    """
+    parser = argparse.ArgumentParser(description="登录解析器")
+    parser.add_argument("-f", "--filepath", type=str, help="登录JSON文件路径, 默认 ~/ssoLogin.json")
+    args = parser.parse_args()
+    sso_login_file_name = args.filepath
+    if sso_login_file_name is None or len(sso_login_file_name) == 0 or str.isspace(sso_login_file_name):
+        sso_login_file_name = "~/ssoLogin.json"
+    print("设置登录文件: [{}]".format(sso_login_file_name))
+    return sso_login_file_name
 
 
 def auto_login() -> str:
@@ -18,11 +35,12 @@ def auto_login() -> str:
     自动登录, 获取登录Cookie
     :rtype: str
     """
+    login_file_name = init_login_file_name()
     try:
-        with open(user_home + "/ssoLogin.json", 'r') as sso_login_request_data:
+        with open(login_file_name, 'r') as sso_login_request_data:
             request_json = json.load(sso_login_request_data)
     except Exception as e:
-        print("当前用户目录{}下不存在{}文件, 请先创建并按照JSON格式填写请求数据".format(user_home, "ssoLogin.json"))
+        print("不存在{}文件, 请先创建并按照JSON格式填写请求数据".format(login_file_name))
         print("示例ssoLogin.json:")
         default_login = {
             "url": "https://sso.testa.huitong.com/api/v100/ssonew/login",
@@ -35,7 +53,7 @@ def auto_login() -> str:
                 "phone": "18999999999",
                 "smsAuthCode": "123456",
                 "loginType": 0,
-                "pwd": "ht123456."
+                "pwd": "123456"
             }
         }
         print(json.dumps(default_login, ensure_ascii=False, indent=4))
@@ -57,7 +75,7 @@ def auto_login() -> str:
 
 
 def example_httpie_cmd(cookie: str):
-    httpie_cmd = "http --verify=no -v POST http://localhost:8119/account/sentinel HT-app:6 Content-Type:application/json 'Cookie:{}' subAccountId:=123456 phone=16620975912"
+    httpie_cmd = "http --verify=no -v POST https://127.0.0.1:8080/account/sentinel HT-app:6 Content-Type:application/json 'Cookie:{}' subAccountId:=123456 phone=16620975912"
     print(("示例Httpie命令: \n" + httpie_cmd).format(cookie))
     print("\nhttpie使用参考: https://httpie.org/docs#non-string-json-fields\n")
 
