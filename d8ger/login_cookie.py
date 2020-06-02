@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 import json
+import os
 import ssl
 
 import requests
@@ -9,6 +10,8 @@ import requests
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
+
+default_file_path = os.path.expanduser('~') + "/ssoLogin.json"
 
 
 def init_login_file_name() -> str:
@@ -22,7 +25,7 @@ def init_login_file_name() -> str:
     args = parser.parse_args()
     sso_login_file_name = args.filepath
     if sso_login_file_name is None or len(sso_login_file_name) == 0 or str.isspace(sso_login_file_name):
-        sso_login_file_name = "~/ssoLogin.json"
+        sso_login_file_name = default_file_path
     print("设置登录文件: [{}]".format(sso_login_file_name))
     return sso_login_file_name
 

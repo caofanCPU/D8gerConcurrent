@@ -11,6 +11,7 @@ import requests
 # 屏蔽HTTPS证书校验, 忽略安全警告
 requests.packages.urllib3.disable_warnings()
 context = ssl._create_unverified_context()
+# D8GER just for joke
 
 
 def init_param() -> list:
