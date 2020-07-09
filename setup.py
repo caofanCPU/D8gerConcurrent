@@ -4,7 +4,7 @@ install_requires = ['requests', 'numpy', 'argparse']
 
 setup(
     name="D8gerConcurrent",
-    version="2.0.1",
+    version="4.0.1",
     keywords=("pip", "concurrent", "d8ger", "test"),
     description="concurrent d8ger test",
     long_description="efficient concurrent test for you d8ger interface",
