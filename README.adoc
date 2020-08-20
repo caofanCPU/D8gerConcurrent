@@ -29,10 +29,11 @@ login-cookie
 
 # 在任意目录X下新建sso-a.json, sso-b.json, sso-x.json等多个环境的登录文件, 指定登录环境
 login-cookie -f X/sso-x.json
+# 借助shell脚本完成更多'快捷键'功能
 ----
 
 .构建过程
-[source, bash]
+[source,bash]
 ----
 # 本地安装测试
 python3 setup.py install
