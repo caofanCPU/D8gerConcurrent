@@ -78,11 +78,19 @@ def auto_login() -> str:
     # request_headers = {"Content-Type": "application/json", "HT-app": "6"}
     response = requests.request(method, url, headers=request_headers, json=request_body, timeout=3, verify=False)
     response_headers = response.headers
-    # 处理Cookie, 多个Cookie之间使用';'分隔, 否则校验cookie时出现"domain."在高版本中tomcat中报错
-    # https://blog.csdn.net/w57685321/article/details/84943176
-    cookie = response_headers.get("set-Cookie").replace(", _r", "; _r").replace(", _a", "; _a")
     # JSON标准格式
     response_body = json.dumps(response.json(), ensure_ascii=False, indent=4)
+    # 处理Cookie, 多个Cookie之间使用';'分隔, 否则校验cookie时出现"domain."在高版本中tomcat中报错
+    # https://blog.csdn.net/w57685321/article/details/84943176
+    cookie = ''
+    try:
+        cookie = response_headers.get("set-Cookie").replace(", _r", "; _r").replace(", _a", "; _a")
+    except Exception as e:
+        print("UH-OH! 登录响应BODY结果: \n{}\n".format(response_body))
+        exit()
+    if str.isspace(cookie):
+        print("登录失败! Cookie不得为空!")
+        exit()
     session_cookie_file_json = {
         "__meta__": {
             "about": "HTTPie session file",
