@@ -13,6 +13,8 @@ context = ssl._create_unverified_context()
 
 default_file_path = os.path.expanduser('~') + "/ssoLogin.json"
 default_extra_cookie = "HT1=10225189"
+current_phone = ''
+current_app_code = 0
 
 
 def init_login_file_name() -> list:
@@ -24,15 +26,35 @@ def init_login_file_name() -> list:
     parser = argparse.ArgumentParser(description="登录解析器")
     parser.add_argument("-f", "--filepath", type=str, help="登录JSON文件路径, 默认 ~/ssoLogin.json")
     parser.add_argument("-e", "--extraCookie", type=str, help="登录额外cookie选项, 默认 HT1=10225189")
+    parser.add_argument("-p", "--phone", type=str, help="登录phone, 默认 phone=18999999999")
+    parser.add_argument("-a", "--appCode", type=int, choices=[1, 2, 3, 4, 5, 6], default=2, help="登录HT-app, 默认 HT-app=2")
+    parser.add_argument("-x", "--example", action='version', version=show_example(), help="示例")
+    parser.add_argument("-v", "--version", action='version', version=show_version(), help="版本号")
     args = parser.parse_args()
     sso_login_file_name = args.filepath
     if sso_login_file_name is None or len(sso_login_file_name) == 0 or str.isspace(sso_login_file_name):
         sso_login_file_name = default_file_path
+    global current_app_code
+    global current_phone
+    special_phone = args.phone
+    if (special_phone is not None) and (len(special_phone) == 11) and (not str.isspace(special_phone)):
+        current_phone = special_phone
+    special_app_code = args.appCode
+    if (special_app_code is not None) and special_app_code > 0:
+        current_app_code = special_app_code
     extra_cookie = default_extra_cookie
     if args.extraCookie is not None:
         extra_cookie = args.extraCookie
     print("设置登录文件: [{}]".format(sso_login_file_name))
     return [sso_login_file_name, extra_cookie]
+
+
+def show_version() -> str:
+    return "v4.1.1"
+
+
+def show_example() -> str:
+    return "login-cookie -f ~/Desktop/ssoLogin/sso-testX@52.json -p 18000000142 -a 2 -e HT1=10236754"
 
 
 def auto_login() -> str:
@@ -74,7 +96,19 @@ def auto_login() -> str:
     content_type = request_headers['Content-Type']
     if content_type is None:
         content_type = "application/json"
+    # 支持脚本外部参数设置
+    global current_app_code
+    global current_phone
+    if current_app_code > 0:
+        ht_app = str(current_app_code)
+    else:
+        current_app_code = int(ht_app)
     request_body = handle_json_str_value(request_json['body'])
+    if current_phone != '':
+        request_body['phone'] = current_phone
+    else:
+        current_phone = request_body['phone']
+    print("登录手机号: {}, 登录应用码: {}, 登录学校: {}".format(current_phone, current_app_code, extra_cookie))
     # request_headers = {"Content-Type": "application/json", "HT-app": "6"}
     response = requests.request(method, url, headers=request_headers, json=request_body, timeout=3, verify=False)
     response_headers = response.headers
