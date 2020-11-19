@@ -4,7 +4,7 @@ install_requires = ['requests', 'numpy', 'argparse']
 
 setup(
     name="D8gerConcurrent",
-    version="4.1.1",
+    version="4.2.0",
     keywords=("pip", "concurrent", "d8ger", "test"),
     description="concurrent d8ger test",
     long_description="efficient concurrent test for you d8ger interface",
@@ -21,8 +21,16 @@ setup(
     scripts=[],
     entry_points={
         'console_scripts': [
-            'easy-http=d8ger.easy_test:main',
-            'login-cookie=d8ger.login_cookie:main'
+            'testD8ger=d8ger.oh_my_d8ger:test_d8ger',
+            'easyHttp=d8ger.easy_test:main',
+            'loginCookie=d8ger.login_cookie:main',
+            'Psearch_port_occupy=d8ger.oh_my_d8ger:search_port_occupy',
+            'Psearch_pid=d8ger.oh_my_d8ger:search_pid',
+            'Pkill_pid=d8ger.oh_my_d8ger:kill_pid',
+            'Pcph=d8ger.oh_my_d8ger:cph',
+            'Pfk_grep=d8ger.oh_my_d8ger:fk_grep',
+            'Parthas_help=d8ger.oh_my_d8ger:arthas_help',
+            'Psix_x=d8ger.oh_my_d8ger:six_x',
         ]
     },
 )
