@@ -1,18 +1,36 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# import subprocess
 import argparse
-import os
+import subprocess
 
 
-def test_d8ger():
+def welcome():
     """
-    测试
+    主页信息
     """
-    print("0")
+    print('''
+    ################################################################
+    1.Search processes ID by http port,  $ DsearchPortOccupy  端口号
+    2.Search processes ID by keyword,    $ DsearchPid         关键词
+    3.Kill processes by keyword,         $ DkillPid           关键词
+    4.Easy search file by keyword,       $ D6x                关键词
+    5.Hack enhance 'cp' command help,    $ Dhcp
+    6.'grep' command help,               $ DfkGrep
+    7.'arthas' usage help,               $ Desa
+    8.Auto login and parse cookie,       $ DloginCookie -h
+    9.Http interface concurrent test,    $ DeasyHttp    -h
+    ################################################################
+    Install:           $ pip3 install D8gerConcurrent
+    Upgrade:           $ pip3 install --upgrade D8gerConcurrent
+    Uninstall:         $ pip3 uninstall D8gerConcurrent
+    Github:            https://github.com/caofanCPU/D8gerConcurrent
+    ''')
 
 
 def search_port_occupy():
+    """
+    根据http端口号搜索占用的进程
+    """
     parser = argparse.ArgumentParser(description="查找被占用的端口")
     parser.add_argument("port", type=int, help="端口号")
     args = parser.parse_args()
@@ -25,6 +43,9 @@ def search_port_occupy():
 
 
 def search_pid():
+    """
+    根据关键词搜索对应进程PID
+    """
     parser = argparse.ArgumentParser(description="根据关键字查找进程ID")
     parser.add_argument("keyword", type=str, help="目标进程匹配关键字")
     args = parser.parse_args()
@@ -37,6 +58,9 @@ def search_pid():
 
 
 def kill_pid():
+    """
+    根据关键词kill -9 对应进程
+    """
     parser = argparse.ArgumentParser(description="根据关键字KILL进程ID")
     parser.add_argument("keyword", type=str, help="目标进程匹配关键字")
     args = parser.parse_args()
@@ -54,7 +78,10 @@ def kill_pid():
     execute_block_shell(cmd)
 
 
-def cph():
+def hcp():
+    """
+    hack cp命令, 传文件, 带进度条复制文件
+    """
     print('''
     ,------.   ,---.  ,----.   ,------.,------.
     |  .-.  \ |  o  |'  .-./   |  .---'|  .--. '
@@ -77,6 +104,9 @@ def cph():
 
 
 def fk_grep():
+    """
+    grep搜索指南, DfkGrep
+    """
     print('''
     ,------.,--. ,--. ,----.   ,------. ,------.,------.
     |  .---'|  .'   /'  .-./   |  .--. '|  .---'|  .--. '
@@ -101,6 +131,9 @@ def fk_grep():
 
 
 def arthas_help():
+    """
+    arthas使用指南
+    """
     print('''
       ,---.  ,------. ,--------.,--.  ,--.  ,---.   ,---.
      /  O  \ |  .--. ''--.  .--'|  '--'  | /  O  \ '   .-'
@@ -147,6 +180,9 @@ def arthas_help():
 
 
 def six_x():
+    """
+    简化关键词搜索
+    """
     parser = argparse.ArgumentParser(description="关键词匹配目录搜索")
     parser.add_argument("keyword", type=str, help="关键词")
     args = parser.parse_args()
@@ -154,9 +190,12 @@ def six_x():
     if keyword is None:
         print("请输入匹配关键词")
         return
-    cmd = 'ls -ah | grep {}'.format(keyword)
+    cmd = 'ls -alh | grep {}'.format(keyword)
     execute_block_shell(cmd)
 
 
 def execute_block_shell(cmd: str):
-    os.system(cmd)
+    """
+    通过一个子进程运行shell命令, 多条命令应用 ';' 或者 '&&'封装在入参cmd中
+    """
+    subprocess.call(cmd, shell=True)
