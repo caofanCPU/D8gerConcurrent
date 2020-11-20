@@ -1,19 +1,24 @@
 
 == HTTP接口并发测试工具
+
 . easy-http
 . httpie
 . http和json测试自定义接口
+. 简易shell命令
+
+image::http://file.debuggerpowerzcy.top/power/D8Efficient.jpg[]
 
 === easy-http
 
 .下载安装
-[source, bash]
+[source,bash]
 ----
 pip3 install D8gerConcurrent
+# source .zshrc 或者 src
 ----
 
 .使用示例
-[source, bash]
+[source,bash]
 ----
 # 获取帮助信息
 easy-http [-h|--help]
