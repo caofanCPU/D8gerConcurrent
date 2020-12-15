@@ -58,3 +58,6 @@ delta = int(word_count * 0.4)
 rank_split_list = [delta, delta, delta, word_count - delta * 3]
 out = [list(islice(word_iterator, size)) for size in rank_split_list]
 print(out)
+
+# ['AB', 'AD', 'AC', 'BCD', 'ABE', 'F']
+# 11,
