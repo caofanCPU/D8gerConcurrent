@@ -4,7 +4,7 @@ install_requires = ['requests', 'numpy', 'argparse']
 
 setup(
     name="D8gerConcurrent",
-    version="4.2.1",
+    version="4.2.2",
     keywords=("pip", "concurrent", "d8ger", "test", "easy", "shell"),
     description="concurrent test and useful shell command",
     long_description="make efficient for concurrent test, login, shell commands ",

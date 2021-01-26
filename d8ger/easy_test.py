@@ -52,7 +52,7 @@ def execute_http(i):
     response_text = "无响应文本"
     execute_start_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
     try:
-        response = requests.request("POST", url, headers=request_headers, json=request_body, timeout=3, verify=False)
+        response = requests.request("POST", url, headers=request_headers, json=request_body, timeout=60, verify=False)
         # JSON标准格式
         response_text = response.text
     except Exception as e:
